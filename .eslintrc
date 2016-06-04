@@ -1,0 +1,10 @@
+{
+  "extends": ["standard", "standard-react"],
+  "ecmaFeatures": {
+    "defaultParams": true
+  },
+  "rules": {
+    "no-console": 2,
+    "linebreak-style": [2, "unix"]
+  }
+}
