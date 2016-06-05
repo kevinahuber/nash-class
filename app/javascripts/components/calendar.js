@@ -1,9 +1,108 @@
 import React from 'react'
+import BigCalendar from 'react-big-calendar'
+import moment from 'moment'
+import Sorter from './sorter.js'
+
+const colors = [
+ '#3E2723',
+ '#FF6F00',
+ '#311B92',
+ '#01579B',
+ '#BF360C',
+ '#0D47A1',
+ '#1B5E20',
+ '#880E4F',
+ '#004D40',
+ '#1A237E',
+  '#263238',
+  '#33691E',
+  '#006064',
+  '#827717',
+  '#B71C1C',
+  '#4A148C'
+]
 
 export default class Calendar extends React.Component {
+  constructor (props) {
+    super(props)
+    BigCalendar.setLocalizer(
+      BigCalendar.momentLocalizer(moment)
+    )
+    this.state = {}
+  }
+
+  startAccessor (event) {
+    if (!event.start) console.log(event)
+    return new Date(event.start.dateTime)
+  }
+
+  endAccessor (event) {
+    if (!event.end) console.log(event)
+    return new Date(event.end.dateTime)
+  }
+
+  changeLocation(location) {
+    this.setState({currentLocation: location})
+  }
+
+  getLocations () {
+    // HACK: Can do this better with fancy es6
+    const locations = []
+    this.props.events.map((e) => {
+      if (e.location && !~locations.indexOf(e.location)) locations.push(e.location)
+    })
+    return locations
+  }
+
+  filterByLocation () {
+    return this.props.events.filter((e) => {
+      return e.status !== 'cancelled' && e.start && e.end &&
+        (!this.state.currentLocation || e.location === this.state.currentLocation)
+    })
+  }
+
+  eventPropGetter (event) {
+    const color = colors[this.getLocations().indexOf(event.location)]
+    return {style: {'background-color': color}}
+  }
+
   render () {
     return (
-      <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=nashville.community.classes%40gmail.com&amp;color=%232952A3&amp;ctz=America%2FChicago" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+      <div>
+        <div className="col-sm-12">
+          <Sorter
+            locations={this.getLocations()}
+            currentLocation={this.state.currentLocation}
+            onChangeLocation={this.changeLocation.bind(this)}
+            colors={colors}
+          />
+        </div>
+        <div className="col-sm-12">
+          <h4>Calendar</h4>
+          <div className="calendar">
+            <BigCalendar
+              events={this.filterByLocation()}
+              defaultDate={new Date()}
+              startAccessor={this.startAccessor}
+              endAccessor={this.endAccessor}
+              titleAccessor='summary'
+              popup
+              defaultView='week'
+              min={new Date(16, 2, 2, 6)}
+              max={new Date(16, 2, 2, 21)}
+              eventPropGetter={this.eventPropGetter.bind(this)}
+            />
+          </div>
+        </div>
+      </div>
     )
   }
+}
+
+Calendar.defaultProps = {
+  events: []
+}
+
+Calendar.propTypes = {
+  events: React.PropTypes.array
 }

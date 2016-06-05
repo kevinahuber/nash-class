@@ -15,7 +15,7 @@ const PATHS = {
 
 module.exports = {
   entry: {
-    app: [jadeReact, PATHS.javascripts, 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000']
+    app: [jadeReact, PATHS.javascripts, 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', 'react-big-calendar/lib/css/react-big-calendar.css'],
   },
   resolve: {
     extensions: ['', '.js', '.jsx']
