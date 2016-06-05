@@ -4,22 +4,27 @@ import moment from 'moment'
 import Sorter from './sorter.js'
 
 const colors = [
- '#3E2723',
- '#FF6F00',
- '#311B92',
- '#01579B',
- '#BF360C',
- '#0D47A1',
- '#1B5E20',
- '#880E4F',
- '#004D40',
- '#1A237E',
+  '#3E2723',
+  '#FF6F00',
+  '#311B92',
+  '#01579B',
+  '#BF360C',
+  '#0D47A1',
+  '#1B5E20',
+  '#880E4F',
+  '#004D40',
+  '#1A237E',
   '#263238',
   '#33691E',
   '#006064',
   '#827717',
   '#B71C1C',
   '#4A148C'
+]
+
+const badLocations = [
+  'Headley Park Regional Community Center',
+  'Hadley Park Regional Community'
 ]
 
 export default class Calendar extends React.Component {
@@ -32,24 +37,25 @@ export default class Calendar extends React.Component {
   }
 
   startAccessor (event) {
-    if (!event.start) console.log(event)
     return new Date(event.start.dateTime)
   }
 
   endAccessor (event) {
-    if (!event.end) console.log(event)
     return new Date(event.end.dateTime)
   }
 
-  changeLocation(location) {
+  changeLocation (location) {
     this.setState({currentLocation: location})
   }
 
   getLocations () {
     // HACK: Can do this better with fancy es6
-    const locations = []
+    let locations = []
     this.props.events.map((e) => {
       if (e.location && !~locations.indexOf(e.location)) locations.push(e.location)
+    })
+    locations = locations.filter((l) => {
+      return !~badLocations.indexOf(l)
     })
     return locations
   }
@@ -62,14 +68,14 @@ export default class Calendar extends React.Component {
   }
 
   eventPropGetter (event) {
-    const color = colors[this.getLocations().indexOf(event.location)]
+    const color = colors[this.getLocations().indexOf(event.location) + 1]
     return {style: {'background-color': color}}
   }
 
   render () {
     return (
       <div>
-        <div className="col-sm-12">
+        <div className='col-sm-12'>
           <Sorter
             locations={this.getLocations()}
             currentLocation={this.state.currentLocation}
@@ -77,9 +83,9 @@ export default class Calendar extends React.Component {
             colors={colors}
           />
         </div>
-        <div className="col-sm-12">
+        <div className='col-sm-12'>
           <h4>Calendar</h4>
-          <div className="calendar">
+          <div className='calendar'>
             <BigCalendar
               events={this.filterByLocation()}
               defaultDate={new Date()}

@@ -23,12 +23,12 @@ export default class Sorter extends React.Component {
           ))}
           <div
             style={{
-                'background-color': this.props.colors[0],
-                'color': 'white',
-                'padding': '10px',
-                'margin': '3px',
-                'border': !this.props.currentLocation ? '#FFEB3B 6px solid' : 'white 6px solid'
-              }}
+              'background-color': this.props.colors[0],
+              'color': 'white',
+              'padding': '10px',
+              'margin': '3px',
+              'border': !this.props.currentLocation ? '#FFEB3B 6px solid' : 'white 6px solid'
+            }}
             onClick={this.props.onChangeLocation.bind(this, undefined)}>
             All Locations
           </div>
