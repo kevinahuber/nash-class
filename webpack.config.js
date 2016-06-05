@@ -1,21 +1,20 @@
-const path = require('path');
-const webpack = require('webpack');
+const path = require('path')
+const webpack = require('webpack')
 const jadeReact = path.resolve('lib/jade-react.js')
-const TARGET = process.env.npm_lifecycle_event;
-const NpmInstallPlugin = require('npm-install-webpack-plugin');
+const TARGET = process.env.npm_lifecycle_event
 
-process.env.BABEL_ENV = TARGET;
+process.env.BABEL_ENV = TARGET
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
   build: path.join(__dirname, 'build'),
-  node: path.join( __dirname, 'node_modules' ),
+  node: path.join(__dirname, 'node_modules'),
   javascripts: path.join(__dirname, 'app/javascripts')
-};
+}
 
 module.exports = {
   entry: {
-    app: [jadeReact, PATHS.javascripts, 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', 'react-big-calendar/lib/css/react-big-calendar.css'],
+    app: [jadeReact, PATHS.javascripts, 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', 'react-big-calendar/lib/css/react-big-calendar.css']
   },
   resolve: {
     extensions: ['', '.js', '.jsx']
