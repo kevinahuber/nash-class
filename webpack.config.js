@@ -1,9 +1,5 @@
 const path = require('path')
 const webpack = require('webpack')
-const jadeReact = path.resolve('lib/jade-react.js')
-const TARGET = process.env.npm_lifecycle_event
-
-process.env.BABEL_ENV = TARGET
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
@@ -14,10 +10,11 @@ const PATHS = {
 
 module.exports = {
   entry: {
-    app: [jadeReact, PATHS.javascripts, 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', 'react-big-calendar/lib/css/react-big-calendar.css']
-  },
-  resolve: {
-    extensions: ['', '.js', '.jsx']
+    app: [
+      'whatwg-fetch', // include this fetch pollyfill as an entrypoint so `fetch` is transparently pollyfilled for all dependencies
+      PATHS.javascripts,
+      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=5000'
+    ]
   },
   output: {
     path: PATHS.build,
@@ -30,10 +27,6 @@ module.exports = {
         test: /\.jsx?$/,
         loaders: ['react-hot', 'babel?cacheDirectory'],
         exclude: /node_modules/
-      },
-      {
-        test: /\.json$/,
-        loader: 'json-loader'
       },
       {
         test: /\.css$/,
