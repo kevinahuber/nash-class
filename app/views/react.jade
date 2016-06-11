@@ -1,5 +1,0 @@
-mixin react(component, props)
-  - var id = 'react-' + Math.floor(Math.random() * Date.now())
-  - var opts = {id: id, component: component, initialNow: Date.now(), locale: locale, props: props || attributes || {}}
-  .react(id=id)!= __jadeReact(opts)
-  script window.__jadeReact(!{JSON.stringify(opts)})

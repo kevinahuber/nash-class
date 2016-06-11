@@ -1,8 +1,5 @@
-
-
 # NashClass
-
-> For, you know, classes. This begun as a (Nashville Day of Civic Hacking)[http://nashvillecivichackday.tech/] project to better serve the nashville community as whole.
+For, you know, classes. This begun as a (Nashville Day of Civic Hacking)[http://nashvillecivichackday.tech/] project to better serve the nashville community as whole.
 
 ## Requirements
 * Node v4.2 or greater

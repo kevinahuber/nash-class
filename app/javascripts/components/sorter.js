@@ -43,7 +43,7 @@ export default class Sorter extends React.Component {
           ))}
           <div
             style={{
-              'background-color': this.props.colors[0],
+              'backgroundColor': this.props.colors[0],
               'color': 'white',
               'padding': '10px',
               'margin': '3px',

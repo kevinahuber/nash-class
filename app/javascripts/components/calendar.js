@@ -22,6 +22,8 @@ const colors = [
   '#4A148C'
 ]
 
+// Some fat-fingered locations with no valid events. We filter these from
+// the locations filter
 const badLocations = [
   'Headley Park Regional Community Center',
   'Hadley Park Regional Community'
@@ -79,7 +81,7 @@ export default class Calendar extends React.Component {
 
   eventPropGetter (event) {
     const color = colors[this.getLocations().indexOf(event.location) + 1]
-    return {style: {'background-color': color}}
+    return {style: {'backgroundColor': color}}
   }
 
   render () {
