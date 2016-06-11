@@ -11,6 +11,7 @@ const PATHS = {
 module.exports = {
   entry: {
     app: [
+      'whatwg-fetch', // include this fetch pollyfill as an entrypoint so `fetch` is transparently pollyfilled for all dependencies
       PATHS.javascripts,
       'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=5000'
     ]
