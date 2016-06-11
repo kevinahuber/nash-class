@@ -33,7 +33,10 @@ export default class Calendar extends React.Component {
     BigCalendar.setLocalizer(
       BigCalendar.momentLocalizer(moment)
     )
-    this.state = {}
+    this.state = {
+      currentLocation: '',
+      summaryFilterText: ''
+    }
   }
 
   startAccessor (event) {
@@ -48,6 +51,11 @@ export default class Calendar extends React.Component {
     this.setState({currentLocation: location})
   }
 
+  changeSummaryFilter (text) {
+    console.log("Text", text)
+    this.setState({summaryFilterText: text})
+  }
+
   getLocations () {
     // HACK: Can do this better with fancy es6
     let locations = []
@@ -60,10 +68,12 @@ export default class Calendar extends React.Component {
     return locations
   }
 
-  filterByLocation () {
-    return this.props.events.filter((e) => {
-      return e.status !== 'cancelled' && e.start && e.end &&
-        (!this.state.currentLocation || e.location === this.state.currentLocation)
+  getFilteredEvents () {
+    return this.props.events.filter((event) => {
+      var eventHasStartAndEndDate = event.start && event.end,
+          eventMatchesLocationFilter = !this.state.currentLocation || event.location === this.state.currentLocation,
+          eventMatchesSummaryFilter = !this.state.summaryFilterText || event.summary.toLowerCase().indexOf(this.state.summaryFilterText.toLowerCase()) > -1
+      return eventHasStartAndEndDate && eventMatchesLocationFilter && eventMatchesSummaryFilter
     })
   }
 
@@ -79,7 +89,9 @@ export default class Calendar extends React.Component {
           <Sorter
             locations={this.getLocations()}
             currentLocation={this.state.currentLocation}
+            summaryFilterText={this.state.summaryFilterText}
             onChangeLocation={this.changeLocation.bind(this)}
+            onChangeSummaryFilter={this.changeSummaryFilter.bind(this)}
             colors={colors}
           />
         </div>
@@ -87,7 +99,7 @@ export default class Calendar extends React.Component {
           <h4>Calendar</h4>
           <div className='calendar'>
             <BigCalendar
-              events={this.filterByLocation()}
+              events={this.getFilteredEvents()}
               defaultDate={new Date()}
               startAccessor={this.startAccessor}
               endAccessor={this.endAccessor}
