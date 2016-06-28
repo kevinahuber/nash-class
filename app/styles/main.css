@@ -21,6 +21,13 @@ footer {
     background: url("https://s3.amazonaws.com/nash-fitness-class/centennial.jpg");
     background-size:cover;
   }
+
+.header-bg h1,
+.header-bg h2,
+.header-bg h3 {
+  color: white;
+}
+
 .links{
   text-align: center;
   background-color: rgba(82,122,172,.35);
