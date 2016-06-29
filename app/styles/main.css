@@ -16,16 +16,18 @@ footer {
 }
 
 .header-bg {
+    margin-top:10px;
     width:100%;
-    height:500px;
-    background: url("https://s3.amazonaws.com/nash-fitness-class/centennial.jpg");
+    height:300px;
+    overflow: hidden;
+    background: url("https://s3.amazonaws.com/nash-fitness-class/centennial.jpg")center center;
     background-size:cover;
   }
 .links{
   text-align: center;
   background-color: rgba(82,122,172,.35);
   padding:20px;
-  margin-right: 12px;
+  margin:0 12px 0 12px;
 }
 
 .sorter * {
